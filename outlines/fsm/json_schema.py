@@ -153,13 +153,7 @@ def to_regex(resolver: Resolver, instance: dict):
     # any (one or more) of the given subschemas.
     elif "anyOf" in instance:
         subregexes = [to_regex(resolver, t) for t in instance["anyOf"]]
-        combinations = [
-            "(" + "".join(c) + ")"
-            for r in range(1, len(subregexes) + 1)
-            for c in it.permutations(subregexes, r)
-        ]
-
-        return rf"({'|'.join(combinations)})"
+        return rf"({'|'.join(subregexes)})"
 
     # To validate against oneOf, the given data must be valid against exactly
     # one of the given subschemas.
